@@ -1,7 +1,9 @@
 package com.example;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -12,6 +14,8 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class LionTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Mock
     Feline felineMock;
@@ -41,8 +45,10 @@ public class LionTest {
         assertFalse("У самки не должно быть гривы", lion.doesHaveMane());
     }
 
-    @Test(expected = Exception.class)
+    @Test
     public void testLionConstructorException() throws Exception {
+        thrown.expect(Exception.class);
+        thrown.expectMessage("Используйте допустимые значения пола животного - самей или самка");
         new Lion("Неизвестный пол");
     }
 
